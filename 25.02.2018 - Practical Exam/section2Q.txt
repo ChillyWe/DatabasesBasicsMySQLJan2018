@@ -1,0 +1,30 @@
+USE buhtig;
+
+#2
+SET foreign_key_checks = 0;
+
+INSERT INTO issues (title, issue_status, repository_id, assignee_id)
+SELECT 
+    concat('Critical Problem With ', f.name, '!'),
+    'open',
+    ceil((f.id * 2) / 3),
+    c.contributor_id
+FROM
+    files AS f
+   join commits as c on c.id = f.commit_id
+WHERE
+    f.id BETWEEN 46 AND 50;
+
+SET foreign_key_checks = 1;
+#3
+
+
+
+
+
+#4
+DELETE r FROM repositories AS r
+        LEFT JOIN
+    issues AS i ON i.repository_id = r.id 
+WHERE
+    i.repository_id IS NULL;
